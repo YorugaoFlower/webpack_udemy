@@ -1,39 +1,15 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-
-  // ...
-
-  module: {
-    rules: [
-      {
-        test: /\.css/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-          },
-          {
-            loader: 'css-loader',
-          }
-        ],
-      },
-    ],
+  entry: {
+    main: './src/javascripts/main.js',
   },
-  // 追加
-  plugins: [
-    new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin(),
-  ],
-};
-
-
-module.exports = {
-  entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, './dist'),
-    filename: 'main.js'
+    filename: 'javascripts/main.js',
   },
   module : {
     rules: [
@@ -51,9 +27,12 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/index.html'
+    new MiniCssExtractPlugin({
+      filename: './stylesheets/main.css',
     }),
+    new HtmlWebpackPlugin({
+      template: './src/templates/index.html',
+    }),
+    new CleanWebpackPlugin(),
   ],
 }
