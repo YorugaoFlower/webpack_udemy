@@ -3,7 +3,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+
 module.exports = {
+  devServer: {
+    static: path.resolve(__dirname, 'src'),
+  },
   entry: {
     main: './src/javascripts/main.js',
   },
@@ -11,16 +15,22 @@ module.exports = {
     path: path.resolve(__dirname, './dist'),
     filename: 'javascripts/main.js',
   },
+  performance: {
+    maxAssetSize: 3000000,
+  },
   module : {
     rules: [
       {
-        test: /\.css/,
+        test: /\.(css|scss|sass)$/,
         use: [
           {
             loader: MiniCssExtractPlugin.loader,
           },
           {
             loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader',
           },
         ],
       },
@@ -67,6 +77,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/templates/access.pug',
       filename: 'access.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/templates/members/taro.pug',
+      filename: 'members/taro.html',
     }),
     new CleanWebpackPlugin(),
   ],
