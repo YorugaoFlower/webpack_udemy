@@ -2,12 +2,12 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { VueLoaderPlugin } = require("vue-loader");
 
 
 module.exports = {
   mode: 'development',
-  devtool: 'source-map',
+  // devtool: 'source-map',
+  devtool: 'eval-source-map',
   devServer: {
     static: path.resolve(__dirname, 'src'),
   },
@@ -17,6 +17,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: 'javascripts/main.js',
+    publicPath: '/',
   },
   performance: {
     maxAssetSize: 3000000,
@@ -30,15 +31,6 @@ module.exports = {
           {
             loader: 'ts-loader',
           },
-        ],
-      },
-      {
-        test: /\.vue/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'vue-loader',
-          }
         ],
       },
       {
@@ -113,7 +105,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: './stylesheets/main.css',
     }),
